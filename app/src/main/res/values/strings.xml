@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">StoryAPI</string>
+
+    <string name="logo_description">Dicoding</string>
+
+    <string name="login_title">Welcome Back</string>
+    <string name="login_description">Login to your account!</string>
+
+    <string name="register_title">Welcome</string>
+    <string name="register_description">Create your account!</string>
+
+    <string name="name_title">Name</string>
+    <string name="name_hint">Fill in your name</string>
+    <string name="email_title">Email</string>
+    <string name="email_hint">Fill in your email</string>
+    <string name="password_title">Password</string>
+    <string name="password_hint">Fill in your password</string>
+
+    <string name="login_button">Login</string>
+    <string name="register_button">Register</string>
+
+    <string name="error_email">Email is not valid</string>
+    <string name="error_password">Password must be at least 8 characters long</string>
+</resources>
