@@ -1,4 +1,46 @@
 package com.fathoor.storyapi.model.local.preference
 
-class UserPreference {
+import android.content.Context
+import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token")
+
+class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
+    suspend fun getToken(): String? {
+        return dataStore.data.first()[TOKEN_KEY]
+    }
+
+    suspend fun saveToken(token: String) {
+        dataStore.edit {
+            it[TOKEN_KEY] = token
+        }
+    }
+
+    suspend fun clearToken() {
+        dataStore.edit {
+            it.remove(TOKEN_KEY)
+        }
+        Log.d("UserPreference", "clearToken: ${dataStore.data.map { it[TOKEN_KEY] }}")
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: UserPreference? = null
+        private val TOKEN_KEY = stringPreferencesKey("token")
+
+        fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
+            return INSTANCE ?: synchronized(this) {
+                val instance = UserPreference(dataStore)
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 }

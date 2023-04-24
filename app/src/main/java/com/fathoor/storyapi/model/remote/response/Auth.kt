@@ -10,7 +10,7 @@ data class AuthResponse(
     val message: String,
 
     @field:SerializedName("loginResult")
-    val loginResult: LoginResult? = null
+    val loginResult: LoginResult
 )
 
 data class LoginResult(

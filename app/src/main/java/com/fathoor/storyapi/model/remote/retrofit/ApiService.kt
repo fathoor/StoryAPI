@@ -7,43 +7,39 @@ import com.fathoor.storyapi.model.remote.response.StoryListResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
-    @POST("/register")
-    suspend fun userRegister(
+    @FormUrlEncoded
+    @POST("register")
+    fun userRegister(
         @Field("name") name: String,
         @Field("email") email: String,
         @Field("password") password: String
     ) : Call<Response>
 
-    @POST("/login")
-    suspend fun userLogin(
+    @FormUrlEncoded
+    @POST("login")
+    fun userLogin(
         @Field("email") email: String,
         @Field("password") password: String
     ) : Call<AuthResponse>
 
     @Multipart
-    @POST("/stories")
-    suspend fun userStory(
+    @POST("stories")
+    fun userStory(
         @Header("Authorization") token: String,
         @Part photo: MultipartBody.Part,
         @Part("description") description: RequestBody
     ) : Call<Response>
 
-    @GET("/stories")
-    suspend fun userStoryList(
+    @GET("stories")
+    fun userStoryList(
         @Header("Authorization") token: String,
     ) : Call<StoryListResponse>
 
-    @GET("/stories/{id}")
-    suspend fun userStoryDetail(
+    @GET("stories/{id}")
+    fun userStoryDetail(
         @Header("Authorization") token: String,
         @Path("id") id: String
     ) : Call<StoryDetailResponse>
