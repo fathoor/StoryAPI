@@ -5,4 +5,5 @@ import java.util.concurrent.Executors
 
 class AppExecutor {
     val diskIO: Executor = Executors.newSingleThreadExecutor()
+    val networkIO: Executor = Executors.newFixedThreadPool(4)
 }
