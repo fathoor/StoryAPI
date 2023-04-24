@@ -17,6 +17,7 @@
     <string name="password_hint">Fill in your password</string>
 
     <string name="login_button">Login</string>
+    <string name="logout_button">Logout</string>
     <string name="register_button">Register</string>
 
     <string name="error_email">Email is not valid</string>

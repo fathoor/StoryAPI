@@ -1,4 +1,4 @@
-package com.fathoor.storyapi.model.remote.response
+package com.fathoor.storyapi.model.local.entity
 
 data class User(
     val name: String,
