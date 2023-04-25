@@ -5,11 +5,13 @@
         <item name="android:textSize">20sp</item>
     </style>
     <style name="AlertDialog.App" parent="ThemeOverlay.Material3.MaterialAlertDialog.Centered">
+        <item name="colorOnPrimary">@color/dicoding_primary</item>
         <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textColor">@color/dicoding_primary</item>
         <item name="materialAlertDialogTitleTextStyle">@style/DialogTitle</item>
         <item name="materialAlertDialogBodyTextStyle">@style/DialogBody</item>
-        <item name="buttonBarStyle">@style/DialogButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/MyPositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/MyNegativeButtonStyle</item>
     </style>
     <style name="DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text.CenterStacked">
         <item name="android:fontFamily">@font/inter_bold</item>
@@ -19,8 +21,10 @@
         <item name="android:fontFamily">@font/inter_semibold</item>
         <item name="android:textColor">@color/dicoding_primary</item>
     </style>
-    <style name="DialogButton" parent="Widget.Material3.Button">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
+    <style name="MyPositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dicoding_primary</item>
+    </style>
+    <style name="MyNegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dicoding_primary</item>
     </style>
 </resources>

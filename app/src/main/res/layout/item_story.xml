@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="@color/dicoding_secondary"
+        android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/iv_item_photo"
-                android:layout_width="144dp"
-                android:layout_height="192dp"
+                android:layout_width="192dp"
+                android:layout_height="256dp"
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/accessibility_item_photo" />
 
@@ -41,7 +41,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter_semibold"
-                    android:textColor="@color/dicoding_primary"
+                    android:textColor="?attr/colorPrimary"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <TextView
@@ -52,7 +52,7 @@
                     android:maxLines="3"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter"
-                    android:textColor="@color/dicoding_primary"
+                    android:textColor="?attr/colorPrimary"
                     android:textAppearance="?attr/textAppearanceBodyMedium" />
 
             </LinearLayout>

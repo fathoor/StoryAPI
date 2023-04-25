@@ -1,7 +1,7 @@
 <resources>
     <style name="Base.Theme.StoryAPI" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/dicoding_primary</item>
-        <item name="android:statusBarColor">@color/dicoding_primary</item>
+        <item name="colorPrimary">@color/dicoding_secondary</item>
+        <item name="android:statusBarColor">@color/dicoding_secondary</item>
     </style>
 
     <style name="Theme.StoryAPI" parent="Base.Theme.StoryAPI" />

@@ -35,7 +35,7 @@
                 android:id="@+id/top_app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/dicoding_primary"
+                android:background="?attr/colorPrimary"
                 app:titleCentered="true"
                 app:title="@string/add_title"
                 app:titleTextColor="@color/white"
@@ -48,18 +48,19 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginVertical="32dp"
         style="?attr/materialCardViewFilledStyle"
-        android:backgroundTint="@color/dicoding_secondary"
+        android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_appbar">
 
         <ImageView
             android:id="@+id/iv_add_photo"
-            android:layout_width="256dp"
+            android:layout_width="match_parent"
             android:layout_height="320dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/accessibility_add_photo" />
@@ -78,6 +79,7 @@
         android:backgroundTint="@color/dicoding_primary"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/camera_button"
+        android:textColor="@color/dicoding_secondary"
         android:textSize="16sp"
         android:alpha="1"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +98,7 @@
         android:backgroundTint="@color/dicoding_primary"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/gallery_button"
+        android:textColor="@color/dicoding_secondary"
         android:textSize="16sp"
         android:alpha="1"
         app:layout_constraintStart_toEndOf="@id/guideline_vertical"
@@ -111,6 +114,8 @@
         android:layout_marginTop="16dp"
         android:hint="@string/add_description"
         android:alpha="1"
+        app:hintTextColor="@color/dicoding_primary"
+        app:boxStrokeColor="@color/dicoding_primary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_camera">
@@ -135,6 +140,7 @@
         android:backgroundTint="@color/dicoding_primary"
         android:fontFamily="@font/inter_semibold"
         android:text="@string/upload_button"
+        android:textColor="@color/dicoding_secondary"
         android:textSize="16sp"
         android:alpha="1"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#f2f2f2</color>
-    <color name="dicoding_primary">#2d3e50</color>
-    <color name="dicoding_secondary">#f2f2f2</color>
+    <color name="dicoding_primary">#f2f2f2</color>
+    <color name="dicoding_secondary">#2d3e50</color>
     <color name="dicoding_error">#ff0000</color>
 </resources>
