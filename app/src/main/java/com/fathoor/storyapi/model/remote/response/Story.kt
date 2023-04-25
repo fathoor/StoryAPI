@@ -35,8 +35,5 @@ data class Story(
     val description: String,
 
     @field:SerializedName("photoUrl")
-    val photoUrl: String,
-
-    @field:SerializedName("createdAt")
-    val createdAt: String
+    val photoUrl: String
 )

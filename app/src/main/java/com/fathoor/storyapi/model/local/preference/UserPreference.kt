@@ -1,14 +1,12 @@
 package com.fathoor.storyapi.model.local.preference
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token")
 
@@ -18,16 +16,11 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     }
 
     suspend fun saveToken(token: String) {
-        dataStore.edit {
-            it[TOKEN_KEY] = token
-        }
+        dataStore.edit { it[TOKEN_KEY] = token }
     }
 
     suspend fun clearToken() {
-        dataStore.edit {
-            it.remove(TOKEN_KEY)
-        }
-        Log.d("UserPreference", "clearToken: ${dataStore.data.map { it[TOKEN_KEY] }}")
+        dataStore.edit { it.remove(TOKEN_KEY) }
     }
 
     companion object {
