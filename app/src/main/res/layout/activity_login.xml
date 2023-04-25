@@ -41,7 +41,7 @@
         android:textSize="24sp"
         android:textColor="@color/dicoding_primary"
         android:gravity="center"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_login_logo" />
@@ -56,7 +56,7 @@
         android:textSize="16sp"
         android:textColor="@color/dicoding_primary"
         android:gravity="center"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_login_title" />
@@ -72,7 +72,7 @@
         android:fontFamily="@font/inter"
         android:labelFor="@id/ti_login_email"
         android:visibility="visible"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_login_description" />
 
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="1"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_email"
         app:hintEnabled="false"
         app:hintTextColor="@color/dicoding_primary"
@@ -113,7 +113,7 @@
         android:textColor="@color/dicoding_primary"
         android:labelFor="@id/ti_login_password"
         android:visibility="visible"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ti_login_email" />
 
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="1"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_lock"
         app:hintEnabled="false"
         app:hintTextColor="@color/dicoding_primary"
@@ -157,7 +157,7 @@
         android:text="@string/login_button"
         android:textColor="@color/dicoding_secondary"
         android:textSize="20sp"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ti_login_password" />

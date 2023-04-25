@@ -41,7 +41,7 @@
         android:textSize="24sp"
         android:textColor="@color/dicoding_primary"
         android:gravity="center"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_logo" />
@@ -56,7 +56,7 @@
         android:textSize="16sp"
         android:textColor="@color/dicoding_primary"
         android:gravity="center"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_register_title" />
@@ -71,7 +71,7 @@
         android:textColor="@color/dicoding_primary"
         android:labelFor="@id/ti_register_name"
         android:visibility="visible"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_register_description" />
 
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="1"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_person"
         app:hintEnabled="false"
         app:hintTextColor="@color/dicoding_primary"
@@ -113,7 +113,7 @@
         android:fontFamily="@font/inter"
         android:labelFor="@id/ti_register_email"
         android:visibility="visible"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ti_register_name" />
 
@@ -124,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="1"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_email"
         app:hintEnabled="false"
         app:hintTextColor="@color/dicoding_primary"
@@ -154,7 +154,7 @@
         android:textColor="@color/dicoding_primary"
         android:labelFor="@id/ti_register_password"
         android:visibility="visible"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ti_register_email" />
 
@@ -165,7 +165,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:alpha="1"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_lock"
         app:passwordToggleEnabled="true"
         app:hintEnabled="false"
@@ -199,7 +199,7 @@
         android:text="@string/register_button"
         android:textColor="@color/dicoding_secondary"
         android:textSize="20sp"
-        android:alpha="1"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ti_register_password" />

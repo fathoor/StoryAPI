@@ -1,5 +1,8 @@
 package com.fathoor.storyapi.view.ui
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -29,6 +32,7 @@ class OnboardActivity : AppCompatActivity() {
         setupViewModel()
         setupSplash()
         setupAction()
+        setupAnimation()
     }
 
     private fun setupView() {
@@ -82,5 +86,26 @@ class OnboardActivity : AppCompatActivity() {
                 Intent(this@OnboardActivity, RegisterActivity::class.java).also { startActivity(it) }
             }
         }
+    }
+
+    private fun setupAnimation() {
+        ObjectAnimator.ofPropertyValuesHolder(
+            binding.ivOnboardLogo,
+            PropertyValuesHolder.ofFloat("scaleX", 1.1f),
+            PropertyValuesHolder.ofFloat("scaleY", 1.1f)
+        ).apply {
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+            duration = 5000
+        }.start()
+
+        val btnLogin = ObjectAnimator.ofFloat(binding.btnLogin, "alpha", 0f, 1f)
+        val btnRegister = ObjectAnimator.ofFloat(binding.btnRegister, "alpha", 0f, 1f)
+
+        AnimatorSet().apply {
+            playSequentially(btnLogin, btnRegister)
+            duration = 500
+            startDelay = 500
+        }.start()
     }
 }
