@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fathoor.storyapi.model.repository.UserRepository
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.HttpException
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
@@ -26,25 +27,27 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         _isLoading.value = true
         _isLoggedIn.value = false
         _error.value = null
-        try {
-            repository.userLogin(email, password).let {
-                _token.value = it.loginResult.token
+
+        runCatching {
+            repository.userLogin(email, password)
+        }.let { result ->
+            result.onSuccess { response ->
+                _token.value = response.loginResult.token
                 saveToken(_token.value.toString())
                 _isLoading.value = false
                 _isLoggedIn.value = true
             }
-        } catch (e: Exception) {
-            _isLoading.value = false
-            if (e is HttpException) {
-                if (e.code() == 401) {
-                    _error.value = ERROR_LOGIN
+            result.onFailure { e ->
+                if (e is HttpException) {
+                    val errorResponse = e.response()?.errorBody()?.string()
+                    val errorMessage = errorResponse?.let { JSONObject(it).getString("message") }
+                    _error.value = errorMessage
                 } else {
-                    _error.value = "HTTP Error ${e.code()}"
+                    _error.value = ERROR_INTERNET
                 }
-            } else {
-                _error.value = e.message
+                _isLoading.value = false
+                Log.e(TAG, "userLogin: ${e.message}")
             }
-            Log.e(TAG, "userLogin: ${e.message}")
         }
     }
 
@@ -54,6 +57,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
     private companion object {
         const val TAG = "LoginViewModel"
-        const val ERROR_LOGIN = "User not found"
+        const val ERROR_INTERNET = "No Internet Connection"
     }
 }

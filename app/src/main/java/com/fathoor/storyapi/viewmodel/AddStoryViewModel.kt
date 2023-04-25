@@ -24,7 +24,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 
-class AddStoryViewModel(private val storyRepository: StoryRepository, private val application: Application) : ViewModel() {
+class AddStoryViewModel(private val repository: StoryRepository, private val application: Application) : ViewModel() {
     private val _file = MutableLiveData<File>()
     val file: LiveData<File> = _file
 
@@ -80,7 +80,7 @@ class AddStoryViewModel(private val storyRepository: StoryRepository, private va
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", photoFile.name, requestImage)
 
         try {
-            storyRepository.userStory(token, imageMultipart, photoDescription).let {
+            repository.userStory(token, imageMultipart, photoDescription).let {
                 _isLoading.value = false
                 _isUploaded.value = true
             }

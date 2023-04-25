@@ -9,6 +9,7 @@ import com.fathoor.storyapi.model.remote.response.Story
 import com.fathoor.storyapi.model.repository.StoryRepository
 import com.fathoor.storyapi.model.repository.UserRepository
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.HttpException
 
 class MainViewModel(
@@ -31,28 +32,30 @@ class MainViewModel(
     fun userStoryList(token: String) = viewModelScope.launch {
         _isLoading.value = true
         _error.value = null
-        try {
-            storyRepository.userStoryList(token).let {
+
+        runCatching {
+            storyRepository.userStoryList(token)
+        }.let { result ->
+            result.onSuccess { response ->
                 _isLoading.value = false
-                _story.value = it.listStory
+                _story.value = response.listStory
             }
-        } catch (e: Exception) {
-            _isLoading.value = false
-            if (e is HttpException) {
-                if (e.code() == 401) {
-                    _error.value = ERROR_TOKEN
+            result.onFailure { e ->
+                if (e is HttpException) {
+                    val errorResponse = e.response()?.errorBody()?.string()
+                    val errorMessage = errorResponse?.let { JSONObject(it).getString("message") }
+                    _error.value = errorMessage
                 } else {
-                    _error.value = "HTTP Error ${e.code()}"
+                    _error.value = ERROR_INTERNET
                 }
-            } else {
-                _error.value = e.message
+                _isLoading.value = false
+                Log.e(TAG, "userStoryList: ${e.message}")
             }
-            Log.e(TAG, "userStoryList: ${e.message}")
         }
     }
 
     private companion object {
         const val TAG = "MainViewModel"
-        const val ERROR_TOKEN = "You are not logged in!"
+        const val ERROR_INTERNET = "No Internet Connection"
     }
 }

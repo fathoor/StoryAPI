@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fathoor.storyapi.model.repository.UserRepository
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.HttpException
 
 class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
@@ -23,28 +24,30 @@ class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
         _isLoading.value = true
         _isRegistered.value = false
         _error.value = null
-        try {
-            repository.userRegister(name, email, password).let {
+
+        runCatching {
+            repository.userRegister(name, email, password)
+        }.let { result ->
+            result.onSuccess {
                 _isLoading.value = false
                 _isRegistered.value = true
             }
-        } catch (e: Exception) {
-            _isLoading.value = false
-            if (e is HttpException) {
-                if (e.code() == 400) {
-                    _error.value = ERROR_REGISTER
+            result.onFailure { e ->
+                if (e is HttpException) {
+                    val errorResponse = e.response()?.errorBody()?.string()
+                    val errorMessage = errorResponse?.let { JSONObject(it).getString("message") }
+                    _error.value = errorMessage
                 } else {
-                    _error.value = "HTTP Error ${e.code()}"
+                    _error.value = ERROR_INTERNET
                 }
-            } else {
-                _error.value = e.message
+                _isLoading.value = false
+                Log.e(TAG, "userRegister: ${e.message}")
             }
-            Log.e(TAG, "userRegister: ${e.message}")
         }
     }
 
     private companion object {
         const val TAG = "RegisterViewModel"
-        const val ERROR_REGISTER = "Email is already taken"
+        const val ERROR_INTERNET = "No Internet Connection"
     }
 }
