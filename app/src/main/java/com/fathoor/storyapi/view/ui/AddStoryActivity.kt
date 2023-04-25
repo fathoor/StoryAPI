@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -16,11 +17,10 @@ import com.fathoor.storyapi.R
 import com.fathoor.storyapi.databinding.ActivityAddStoryBinding
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.AddStoryViewModel
-import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
-    private var binding: ActivityAddStoryBinding? = null
+    private val binding by lazy { ActivityAddStoryBinding.inflate(layoutInflater) }
     private val addStoryViewModel by viewModels<AddStoryViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -37,12 +37,12 @@ class AddStoryActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                binding?.apply {
+                binding.apply {
                     btnCamera.isEnabled = true
                     btnGallery.isEnabled = true
                 }
             } else {
-                showSnackbar(getString(R.string.camera_permission))
+                showToast(getString(R.string.camera_permission))
                 finish()
             }
         }
@@ -50,18 +50,12 @@ class AddStoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddStoryBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         setupView()
         setupAppBar()
         setupViewModel()
         setupAction()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -85,7 +79,7 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private fun setupAppBar() {
-        binding?.topAppBar?.apply {
+        binding.topAppBar.apply {
             setNavigationOnClickListener { onBackPressed() }
         }
     }
@@ -93,12 +87,12 @@ class AddStoryActivity : AppCompatActivity() {
     private fun setupViewModel() {
         addStoryViewModel.apply {
             file.observe(this@AddStoryActivity) { getFile = it }
-            previewBitmap.observe(this@AddStoryActivity) { binding?.ivAddPhoto?.setImageBitmap(it) }
+            previewBitmap.observe(this@AddStoryActivity) { binding.ivAddPhoto.setImageBitmap(it) }
         }
     }
 
     private fun setupAction() {
-        binding?.apply {
+        binding.apply {
             btnCamera.setOnClickListener { startCameraX() }
             btnGallery.setOnClickListener { startGallery() }
             btnUpload.setOnClickListener { uploadStory() }
@@ -122,7 +116,7 @@ class AddStoryActivity : AppCompatActivity() {
             addStoryViewModel.apply {
                 userToken?.let { token ->
                     getFile?.let { photo ->
-                        userStory(token, photo, binding?.edAddDescription?.text.toString())
+                        userStory(token, photo, binding.edAddDescription.text.toString())
                     }
                 }.also {
                     isLoading.observe(this@AddStoryActivity) { showLoading(it) }
@@ -133,32 +127,32 @@ class AddStoryActivity : AppCompatActivity() {
                             startActivity(intent)
                         }
                     }
-                    error.observe(this@AddStoryActivity) { if (!it.isNullOrEmpty()) showSnackbar(it) }
+                    error.observe(this@AddStoryActivity) { if (!it.isNullOrEmpty()) showToast(it) }
                 }
             }
         }
     }
 
-    private fun validateUpload(): Boolean = binding?.run {
+    private fun validateUpload(): Boolean = binding.run {
         when {
             ivAddPhoto.drawable == null -> {
-                showSnackbar(getString(R.string.camera_upload_image))
+                showToast(getString(R.string.camera_upload_image))
                 false
             }
             edAddDescription.text.toString().isEmpty() -> {
-                showSnackbar(getString(R.string.camera_upload_description))
+                showToast(getString(R.string.camera_upload_description))
                 false
             }
             else -> true
         }
-    } ?: false
+    }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this@AddStoryActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(state: Boolean) {
-        binding?.cpiAdd?.visibility = if (state) View.VISIBLE else View.GONE
+        binding.cpiAdd.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     companion object {

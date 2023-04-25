@@ -7,14 +7,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.fathoor.storyapi.databinding.ActivityLoginBinding
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.LoginViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity() {
-    private var binding: ActivityLoginBinding? = null
+    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private val loginViewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -22,16 +22,10 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         setupView()
         setupAction()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 
     private fun setupView() {
@@ -48,12 +42,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding?.apply {
+        binding.apply {
             btnLogin.setOnClickListener {
                 if (!edLoginEmail.error.isNullOrEmpty() || !edLoginPassword.error.isNullOrEmpty()) {
                     when {
-                        !edLoginEmail.error.isNullOrEmpty() -> showSnackbar(edLoginEmail.error.toString())
-                        !edLoginPassword.error.isNullOrEmpty() -> showSnackbar(edLoginPassword.error.toString())
+                        !edLoginEmail.error.isNullOrEmpty() -> showToast(edLoginEmail.error.toString())
+                        !edLoginPassword.error.isNullOrEmpty() -> showToast(edLoginPassword.error.toString())
                     }
                 } else {
                     loginViewModel.apply {
@@ -64,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                             token.observe(this@LoginActivity) { userToken = it }
                             isLoading.observe(this@LoginActivity) { showLoading(it) }
                             isLoggedIn.observe(this@LoginActivity) { if (it) navigateWithToken(userToken) }
-                            error.observe(this@LoginActivity) { if (!it.isNullOrEmpty()) showSnackbar(it) }
+                            error.observe(this@LoginActivity) { if (!it.isNullOrEmpty()) showToast(it) }
                         }
                     }
                 }
@@ -81,11 +75,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(state: Boolean) {
-        binding?.cpiLogin?.visibility = if (state) View.VISIBLE else View.GONE
+        binding.cpiLogin.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

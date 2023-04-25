@@ -7,30 +7,24 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.fathoor.storyapi.databinding.ActivityRegisterBinding
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.RegisterViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class RegisterActivity : AppCompatActivity() {
-    private var binding: ActivityRegisterBinding? = null
+    private val binding by lazy { ActivityRegisterBinding.inflate(layoutInflater) }
     private val registerViewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(application)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         setupView()
         setupAction()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 
     private fun setupView() {
@@ -47,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding?.apply {
+        binding.apply {
             btnRegister.setOnClickListener {
                 registerViewModel.apply {
                     userRegister(
@@ -57,7 +51,7 @@ class RegisterActivity : AppCompatActivity() {
                     ).also {
                         isLoading.observe(this@RegisterActivity) { showLoading(it) }
                         isRegistered.observe(this@RegisterActivity) { if (!it) navigateToLogin() }
-                        error.observe(this@RegisterActivity) { if (!it.isNullOrEmpty()) showSnackbar(it) }
+                        error.observe(this@RegisterActivity) { if (!it.isNullOrEmpty()) showToast(it) }
                     }
                 }
             }
@@ -71,11 +65,11 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this@RegisterActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(state: Boolean) {
-        binding?.cpiRegister?.visibility = if (state) View.VISIBLE else View.GONE
+        binding.cpiRegister.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

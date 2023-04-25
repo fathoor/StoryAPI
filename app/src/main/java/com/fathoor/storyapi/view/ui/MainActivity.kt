@@ -3,10 +3,13 @@ package com.fathoor.storyapi.view.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fathoor.storyapi.R
 import com.fathoor.storyapi.databinding.ActivityMainBinding
 import com.fathoor.storyapi.model.remote.response.Story
@@ -14,19 +17,18 @@ import com.fathoor.storyapi.view.adapter.StoryAdapter
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-    private var binding: ActivityMainBinding? = null
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val mainViewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(application)
     }
     private var userToken: String? = null
+    private var storyList: List<Story>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         setupView()
         setupAppBar()
@@ -35,20 +37,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mainViewModel.story.observe(this@MainActivity) { setupRecyclerView(it) }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
+        storyList?.let { setupRecyclerView(it) }
     }
 
     private fun setupView() {
         userToken = intent.getStringExtra(EXTRA_TOKEN) ?: ""
+        setupSwipeRefresh()
     }
 
     private fun setupAppBar() {
-        binding?.topAppBar?.apply {
+        binding.topAppBar.apply {
             setNavigationOnClickListener { showAlertDialog() }
             setOnMenuItemClickListener { navigateToMenu(it) }
         }
@@ -59,8 +57,11 @@ class MainActivity : AppCompatActivity() {
             userToken?.let { token ->
                 userStoryList(token).also {
                     isLoading.observe(this@MainActivity) { showLoading(it) }
-                    error.observe(this@MainActivity) { if (!it.isNullOrEmpty()) showSnackbar(it) }
-                    story.observe(this@MainActivity) { setupRecyclerView(it) }
+                    error.observe(this@MainActivity) { if (!it.isNullOrEmpty()) showToast(it) }
+                    story.observe(this@MainActivity) {
+                        storyList = it
+                        setupRecyclerView(it)
+                    }
                 }
             }
         }
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         val storyAdapter = StoryAdapter()
         storyAdapter.submitList(story)
 
-        binding?.rvStory?.apply {
+        binding.rvStory.apply {
             adapter = storyAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
@@ -84,6 +85,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun setupSwipeRefresh() {
+        val swipeRefresh: SwipeRefreshLayout = binding.srlStory
+        swipeRefresh.apply {
+            setOnRefreshListener {
+                storyList?.let { setupRecyclerView(it) }
+                isRefreshing = false
+            }
+        }
     }
 
     private fun showAlertDialog() {
@@ -111,6 +122,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
+            R.id.action_language -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                true
+            }
             else -> false
         }
     }
@@ -119,12 +134,12 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.userLogout()
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(state: Boolean) {
-        binding?.cpiMain?.visibility = if (state) View.VISIBLE else View.GONE
+        binding.cpiMain.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     companion object {

@@ -3,9 +3,9 @@ package com.fathoor.storyapi.view.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -16,17 +16,15 @@ import androidx.core.content.ContextCompat
 import com.fathoor.storyapi.R
 import com.fathoor.storyapi.databinding.ActivityCameraBinding
 import com.fathoor.storyapi.view.helper.createFile
-import com.google.android.material.snackbar.Snackbar
 
 class CameraActivity : AppCompatActivity() {
-    private var binding: ActivityCameraBinding? = null
+    private val binding by lazy { ActivityCameraBinding.inflate(layoutInflater) }
     private var imageCapture: ImageCapture? = null
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCameraBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         setupView()
         setupCamera()
@@ -58,7 +56,7 @@ class CameraActivity : AppCompatActivity() {
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(binding?.pvViewfinder?.surfaceProvider)
+                it.setSurfaceProvider(binding.pvViewfinder.surfaceProvider)
             }
 
             imageCapture = ImageCapture.Builder().build()
@@ -69,13 +67,13 @@ class CameraActivity : AppCompatActivity() {
                     this@CameraActivity, cameraSelector, preview, imageCapture
                 )
             } catch (e: Exception) {
-                showSnackbar(e.message.toString())
+                showToast(e.message.toString())
             }
         }, ContextCompat.getMainExecutor(this@CameraActivity))
     }
 
     private fun setupAction() {
-        binding?.apply {
+        binding.apply {
             ivCapture.setOnClickListener { capturePhoto() }
             ivSwitch.setOnClickListener { switchCamera() }
         }
@@ -90,7 +88,7 @@ class CameraActivity : AppCompatActivity() {
         imageCapture.takePicture(
             outputOptions, ContextCompat.getMainExecutor(this@CameraActivity), object : ImageCapture.OnImageSavedCallback {
                 override fun onError(e: ImageCaptureException) {
-                    showSnackbar(getString(R.string.camera_failed))
+                    showToast(getString(R.string.camera_failed))
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
@@ -112,8 +110,8 @@ class CameraActivity : AppCompatActivity() {
         setupCamera()
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
+    private fun showToast(message: String) {
+        Toast.makeText(this@CameraActivity, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

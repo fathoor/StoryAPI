@@ -13,7 +13,7 @@ import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.OnboardViewModel
 
 class OnboardActivity : AppCompatActivity() {
-    private var binding: ActivityOnboardBinding? = null
+    private val binding by lazy { ActivityOnboardBinding.inflate(layoutInflater) }
     private val onboardViewModel by viewModels<OnboardViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -23,18 +23,12 @@ class OnboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOnboardBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        setContentView(binding.root)
 
         setupView()
         setupViewModel()
         setupSplash()
         setupAction()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
     }
 
     private fun setupView() {
@@ -79,7 +73,7 @@ class OnboardActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding?.apply {
+        binding.apply {
             btnLogin.setOnClickListener {
                 Intent(this@OnboardActivity, LoginActivity::class.java).also { startActivity(it) }
             }
