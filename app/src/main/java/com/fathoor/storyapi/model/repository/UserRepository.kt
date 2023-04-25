@@ -1,6 +1,5 @@
 package com.fathoor.storyapi.model.repository
 
-import android.util.Log
 import com.fathoor.storyapi.model.local.preference.UserPreference
 import com.fathoor.storyapi.model.remote.response.AuthResponse
 import com.fathoor.storyapi.model.remote.response.Response
@@ -44,7 +43,6 @@ class UserRepository private constructor(
     suspend fun saveToken(token: String) {
         return withContext(diskDispatcher) {
             userPreference.saveToken(token)
-            Log.d("UserRepository", "saveToken: $token")
         }
     }
 
