@@ -1,58 +1,50 @@
 package com.fathoor.storyapi.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fathoor.storyapi.model.remote.response.Story
 import com.fathoor.storyapi.model.repository.StoryRepository
-import com.fathoor.storyapi.model.repository.UserRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class MainViewModel(
-    private val userRepository: UserRepository,
-    private val storyRepository: StoryRepository
-    ) : ViewModel() {
-    private val _story = MutableLiveData<List<Story>>()
-    val story: LiveData<List<Story>> = _story
+class DetailStoryViewModel(private val storyRepository: StoryRepository) : ViewModel() {
+    private val _storyDetail = MutableLiveData<Story>()
+    val storyDetail: MutableLiveData<Story> = _storyDetail
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    val isLoading: MutableLiveData<Boolean> = _isLoading
 
     private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    val error: MutableLiveData<String?> = _error
 
-    fun userLogout() = viewModelScope.launch {
-        userRepository.userLogout()
-    }
-
-    fun userStoryList(token: String) = viewModelScope.launch {
+    fun userStoryDetail(token: String, id: String) = viewModelScope.launch {
         _isLoading.value = true
         _error.value = null
         try {
-            storyRepository.userStoryList(token).let {
+            storyRepository.userStoryDetail(token, id).let {
                 _isLoading.value = false
-                _story.value = it.listStory
+                _storyDetail.value = it.story ?: throw Exception(ERROR_STORY)
             }
         } catch (e: Exception) {
             _isLoading.value = false
             if (e is HttpException) {
-                if (e.code() == 401) {
+                if (e.code() == 404) {
+                    _error.value = ERROR_STORY
+                } else if (e.code() == 401) {
                     _error.value = ERROR_TOKEN
                 } else {
                     _error.value = "HTTP Error ${e.code()}"
                 }
-            } else {
-                _error.value = e.message
             }
-            Log.e(TAG, "userStoryList: ${e.message}")
+            Log.e(TAG, "userStoryDetail: ${e.message}")
         }
     }
 
     private companion object {
-        const val TAG = "MainViewModel"
+        const val TAG = "DetailStoryViewModel"
+        const val ERROR_STORY = "Story not found"
         const val ERROR_TOKEN = "You are not logged in!"
     }
 }

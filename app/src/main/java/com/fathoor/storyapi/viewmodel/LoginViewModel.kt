@@ -27,14 +27,14 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         _isLoggedIn.value = false
         _error.value = null
         try {
-            val response = repository.userLogin(email, password)
-            _token.value = response.loginResult.token
-            saveToken(_token.value.toString())
-            _isLoading.value = false
-            _isLoggedIn.value = true
+            repository.userLogin(email, password).let {
+                _token.value = it.loginResult.token
+                saveToken(_token.value.toString())
+                _isLoading.value = false
+                _isLoggedIn.value = true
+            }
         } catch (e: Exception) {
             _isLoading.value = false
-            _error.value = e.message
             if (e is HttpException) {
                 if (e.code() == 401) {
                     _error.value = ERROR_LOGIN
@@ -52,7 +52,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         repository.saveToken(key)
     }
 
-    companion object {
+    private companion object {
         const val TAG = "LoginViewModel"
         const val ERROR_LOGIN = "User not found"
     }

@@ -24,16 +24,12 @@ class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
         _isRegistered.value = false
         _error.value = null
         try {
-            val response = repository.userRegister(name, email, password)
-            if (!response.error) {
+            repository.userRegister(name, email, password).let {
                 _isLoading.value = false
                 _isRegistered.value = true
-            } else {
-                _isLoading.value = false
             }
         } catch (e: Exception) {
             _isLoading.value = false
-            _error.value = e.message
             if (e is HttpException) {
                 if (e.code() == 400) {
                     _error.value = ERROR_REGISTER
@@ -47,7 +43,7 @@ class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-    companion object {
+    private companion object {
         const val TAG = "RegisterViewModel"
         const val ERROR_REGISTER = "Email is already taken"
     }
