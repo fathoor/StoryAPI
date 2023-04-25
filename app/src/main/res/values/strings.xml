@@ -1,25 +1,40 @@
 <resources>
-    <string name="app_name">StoryAPI</string>
+    <string name="app_name">Story API</string>
 
     <string name="logo_description">Dicoding</string>
-
     <string name="login_title">Welcome Back</string>
     <string name="login_description">Login to your account!</string>
-
     <string name="register_title">Welcome</string>
     <string name="register_description">Create your account!</string>
 
     <string name="name_title">Name</string>
-    <string name="name_hint">Fill in your name</string>
     <string name="email_title">Email</string>
-    <string name="email_hint">Fill in your email</string>
     <string name="password_title">Password</string>
-    <string name="password_hint">Fill in your password</string>
-
     <string name="login_button">Login</string>
     <string name="logout_button">Logout</string>
     <string name="register_button">Register</string>
-
     <string name="error_email">Email is not valid</string>
     <string name="error_password">Password must be at least 8 characters long</string>
+
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_logout">Are you sure want to logout?</string>
+
+    <string name="detail_title">Post</string>
+    <string name="add_title">Upload</string>
+    <string name="camera_button">Camera</string>
+    <string name="gallery_button">Gallery</string>
+    <string name="upload_button">Upload</string>
+    <string name="add_description">Description</string>
+
+    <string name="camera_permission">Permissions not granted by user</string>
+    <string name="camera_failed">Failed to take picture</string>
+    <string name="camera_upload_image">Fill in image</string>
+    <string name="camera_upload_description">Fill in description</string>
+
+    <string name="accessibility_add_photo">Detail Photo</string>
+    <string name="accessibility_capture">Capture</string>
+    <string name="accessibility_switch">Switch</string>
+    <string name="accessibility_detail_photo">Detail Photo</string>
+    <string name="accessibility_item_photo">Item Photo</string>
 </resources>
