@@ -14,7 +14,7 @@ import com.fathoor.storyapi.viewmodel.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRegisterBinding
+    private var binding: ActivityRegisterBinding? = null
     private val registerViewModel by viewModels<RegisterViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -22,10 +22,15 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         setupView()
         setupAction()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
     private fun setupView() {
@@ -42,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.apply {
+        binding?.apply {
             btnRegister.setOnClickListener {
                 registerViewModel.apply {
                     userRegister(
@@ -67,10 +72,10 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showSnackbar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showLoading(state: Boolean) {
-        binding.cpiRegister.visibility = if (state) View.VISIBLE else View.GONE
+        binding?.cpiRegister?.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

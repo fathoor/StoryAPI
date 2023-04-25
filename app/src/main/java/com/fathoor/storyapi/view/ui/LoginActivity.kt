@@ -14,7 +14,7 @@ import com.fathoor.storyapi.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
+    private var binding: ActivityLoginBinding? = null
     private val loginViewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -23,10 +23,15 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         setupView()
         setupAction()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
     private fun setupView() {
@@ -43,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.apply {
+        binding?.apply {
             btnLogin.setOnClickListener {
                 if (!edLoginEmail.error.isNullOrEmpty() || !edLoginPassword.error.isNullOrEmpty()) {
                     when {
@@ -77,10 +82,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showSnackbar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding?.root as View, message, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun showLoading(state: Boolean) {
-        binding.cpiLogin.visibility = if (state) View.VISIBLE else View.GONE
+        binding?.cpiLogin?.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

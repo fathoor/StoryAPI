@@ -2,18 +2,18 @@ package com.fathoor.storyapi.view.ui
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.fathoor.storyapi.databinding.ActivityOnboardBinding
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.OnboardViewModel
 
 class OnboardActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityOnboardBinding
+    private var binding: ActivityOnboardBinding? = null
     private val onboardViewModel by viewModels<OnboardViewModel> {
         ViewModelFactory.getInstance(application)
     }
@@ -24,12 +24,17 @@ class OnboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         setupView()
         setupViewModel()
         setupSplash()
         setupAction()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 
     private fun setupView() {
@@ -74,7 +79,7 @@ class OnboardActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.apply {
+        binding?.apply {
             btnLogin.setOnClickListener {
                 Intent(this@OnboardActivity, LoginActivity::class.java).also { startActivity(it) }
             }

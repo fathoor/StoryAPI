@@ -6,22 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.MainActivity">
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="0dp"
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/cpi_main"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="32dp"
-        android:backgroundTint="@color/dicoding_primary"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/logout_button"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:alpha="1"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/dicoding_primary"
+        app:indicatorSize="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/top_app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/dicoding_primary"
+                app:titleCentered="true"
+                app:title="@string/app_name"
+                app:titleTextColor="@color/white"
+                app:titleTextAppearance="@style/ToolbarTitleAppearance"
+                app:menu="@menu/top_app_bar"
+                app:navigationIcon="@drawable/ic_logout" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_story"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:overScrollMode="never"
+                android:scrollbarSize="0dp" />
+            
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
