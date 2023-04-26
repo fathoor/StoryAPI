@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.fathoor.storyapi"
-        minSdk 24
+        minSdk 31
         targetSdk 33
         versionCode 1
         versionName "1.0"
