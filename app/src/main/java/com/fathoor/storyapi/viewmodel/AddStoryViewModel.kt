@@ -21,6 +21,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.File
 
@@ -49,9 +50,10 @@ class AddStoryViewModel(private val repository: StoryRepository, private val app
                 result.data?.getSerializableExtra("picture")
             } as? File
             val isBackCamera = result.data?.getBooleanExtra("isBackCamera", true) as Boolean
+            val imageRotationDegrees = result.data?.getIntExtra("imageRotationDegrees", 0) as Int
 
             myFile?.let {
-                rotateFile(it, isBackCamera)
+                rotateFile(it, isBackCamera, imageRotationDegrees)
                 _file.value = it
                 _previewBitmap.value = BitmapFactory.decodeFile(it.path)
             }
@@ -79,22 +81,24 @@ class AddStoryViewModel(private val repository: StoryRepository, private val app
         val requestImage = photoFile.asRequestBody("image/jpeg".toMediaType())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", photoFile.name, requestImage)
 
-        try {
-            repository.userStory(token, imageMultipart, photoDescription).let {
+        runCatching {
+            repository.userStory(token, imageMultipart, photoDescription)
+        }.let { result ->
+            result.onSuccess { response ->
                 _isLoading.value = false
                 _isUploaded.value = true
             }
-        } catch (e: Exception) {
-            _isLoading.value = false
-            _isUploaded.value = false
-            if (e is HttpException) {
-                if (e.code() == 401) {
-                    _error.value = ERROR_TOKEN
+            result.onFailure { e ->
+                if (e is HttpException) {
+                    val errorResponse = e.response()?.errorBody()?.string()
+                    val errorMessage = errorResponse?.let { JSONObject(it).getString("message") }
+                    _error.value = errorMessage
                 } else {
-                    _error.value = "HTTP Error ${e.code()}"
+                    _error.value = ERROR_INTERNET
                 }
+                _isLoading.value = false
+                Log.e(TAG, "userStoryDetail: ${e.message}")
             }
-            Log.e(TAG, "userStory: ${e.message}")
         }
     }
 
@@ -102,6 +106,6 @@ class AddStoryViewModel(private val repository: StoryRepository, private val app
         const val CAMERA_X_SUCCESS = 200
 
         const val TAG = "AddStoryViewModel"
-        const val ERROR_TOKEN = "You are not logged in!"
+        const val ERROR_INTERNET = "No Internet Connection"
     }
 }
