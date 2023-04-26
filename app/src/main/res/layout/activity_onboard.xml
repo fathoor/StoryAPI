@@ -1,76 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.OnboardActivity">
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/iv_onboard_logo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="64dp"
-        app:srcCompat="@drawable/ic_dicoding_logo"
-        app:layout_constraintTop_toTopOf="@id/guideline_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/logo_description" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="16dp"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="32dp"
-        android:backgroundTint="@color/dicoding_primary"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/login_button"
-        android:textColor="@color/dicoding_secondary"
-        android:textSize="16sp"
-        android:alpha="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/iv_onboard_logo" />
+        <ImageView
+            android:id="@+id/iv_onboard_logo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="64dp"
+            app:srcCompat="@drawable/ic_dicoding_logo"
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/logo_description" />
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="32dp"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="32dp"
-        android:backgroundTint="@color/dicoding_primary"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/register_button"
-        android:textColor="@color/dicoding_secondary"
-        android:textSize="16sp"
-        android:alpha="0"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_onboard_logo" />
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="16dp"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="32dp"
+            android:backgroundTint="@color/dicoding_primary"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/login_button"
+            android:textColor="@color/dicoding_secondary"
+            android:textSize="16sp"
+            android:alpha="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_onboard_logo" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.5" />
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="32dp"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="32dp"
+            android:backgroundTint="@color/dicoding_primary"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/register_button"
+            android:textColor="@color/dicoding_secondary"
+            android:textSize="16sp"
+            android:alpha="0"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_onboard_logo" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintGuide_percent="0.25" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_percent="0.5" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintGuide_percent="0.25" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
