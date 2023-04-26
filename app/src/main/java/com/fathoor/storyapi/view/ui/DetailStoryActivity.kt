@@ -35,6 +35,7 @@ class DetailStoryActivity : AppCompatActivity() {
 
     private fun setupAppBar() {
         binding.topAppBar.apply {
+            @Suppress("DEPRECATION")
             setNavigationOnClickListener { onBackPressed() }
         }
     }
@@ -48,6 +49,7 @@ class DetailStoryActivity : AppCompatActivity() {
                             if (it != null) {
                                 showDetail(it)
                             } else {
+                                @Suppress("DEPRECATION")
                                 onBackPressed()
                             }
                         }

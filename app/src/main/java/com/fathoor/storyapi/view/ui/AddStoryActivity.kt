@@ -80,6 +80,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun setupAppBar() {
         binding.topAppBar.apply {
+            @Suppress("DEPRECATION")
             setNavigationOnClickListener { onBackPressed() }
         }
     }

@@ -1,11 +1,9 @@
 package com.fathoor.storyapi.view.ui
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.OrientationEventListener
 import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -46,15 +44,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
+        window.insetsController?.hide(WindowInsets.Type.statusBars())
         supportActionBar?.hide()
         setupCamera()
     }
