@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        storyList?.let { setupRecyclerView(it) }
+        setupViewModel()
     }
 
     private fun setupView() {
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         val swipeRefresh: SwipeRefreshLayout = binding.srlStory
         swipeRefresh.apply {
             setOnRefreshListener {
-                storyList?.let { setupRecyclerView(it) }
+                setupViewModel()
                 isRefreshing = false
             }
         }
