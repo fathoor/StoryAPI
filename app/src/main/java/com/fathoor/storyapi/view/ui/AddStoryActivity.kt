@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.fathoor.storyapi.R
 import com.fathoor.storyapi.databinding.ActivityAddStoryBinding
 import com.fathoor.storyapi.view.helper.ViewModelFactory
@@ -88,7 +89,7 @@ class AddStoryActivity : AppCompatActivity() {
     private fun setupViewModel() {
         addStoryViewModel.apply {
             file.observe(this@AddStoryActivity) { getFile = it }
-            previewBitmap.observe(this@AddStoryActivity) { binding.ivAddPhoto.setImageBitmap(it) }
+            previewBitmap.observe(this@AddStoryActivity) { Glide.with(this@AddStoryActivity).load(it).into(binding.ivAddPhoto) }
         }
     }
 
@@ -122,10 +123,12 @@ class AddStoryActivity : AppCompatActivity() {
                 }.also {
                     isLoading.observe(this@AddStoryActivity) { showLoading(it) }
                     isUploaded.observe(this@AddStoryActivity) {
-                        Intent(this@AddStoryActivity, MainActivity::class.java).also { intent ->
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            intent.putExtra(MainActivity.EXTRA_TOKEN, userToken)
-                            startActivity(intent)
+                        if (it) {
+                            Intent(this@AddStoryActivity, MainActivity::class.java).also { intent ->
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                intent.putExtra(MainActivity.EXTRA_TOKEN, userToken)
+                                startActivity(intent)
+                            }
                         }
                     }
                     error.observe(this@AddStoryActivity) { if (!it.isNullOrEmpty()) showToast(it) }
