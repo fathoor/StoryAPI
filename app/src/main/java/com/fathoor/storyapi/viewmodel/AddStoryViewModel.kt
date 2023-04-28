@@ -84,7 +84,7 @@ class AddStoryViewModel(private val repository: StoryRepository, private val app
         runCatching {
             repository.userStory(token, imageMultipart, photoDescription)
         }.let { result ->
-            result.onSuccess { response ->
+            result.onSuccess {
                 _isLoading.value = false
                 _isUploaded.value = true
             }
