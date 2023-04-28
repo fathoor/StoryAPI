@@ -122,15 +122,7 @@ class AddStoryActivity : AppCompatActivity() {
                     }
                 }.also {
                     isLoading.observe(this@AddStoryActivity) { showLoading(it) }
-                    isUploaded.observe(this@AddStoryActivity) {
-                        if (it) {
-                            Intent(this@AddStoryActivity, MainActivity::class.java).also { intent ->
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                intent.putExtra(MainActivity.EXTRA_TOKEN, userToken)
-                                startActivity(intent)
-                            }
-                        }
-                    }
+                    isUploaded.observe(this@AddStoryActivity) { if (it) navigateWithToken() }
                     error.observe(this@AddStoryActivity) { if (!it.isNullOrEmpty()) showToast(it) }
                 }
             }
@@ -148,6 +140,14 @@ class AddStoryActivity : AppCompatActivity() {
                 false
             }
             else -> true
+        }
+    }
+
+    private fun navigateWithToken() {
+        Intent(this@AddStoryActivity, MainActivity::class.java).also { intent ->
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra(MainActivity.EXTRA_TOKEN, userToken)
+            startActivity(intent)
         }
     }
 
