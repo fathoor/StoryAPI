@@ -148,6 +148,7 @@ class AddStoryActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra(MainActivity.EXTRA_TOKEN, userToken)
             startActivity(intent)
+            finish()
         }
     }
 

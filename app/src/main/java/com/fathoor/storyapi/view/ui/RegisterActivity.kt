@@ -37,15 +37,23 @@ class RegisterActivity : AppCompatActivity() {
     private fun setupAction() {
         binding.apply {
             btnRegister.setOnClickListener {
-                registerViewModel.apply {
-                    userRegister(
-                        edRegisterName.text.toString(),
-                        edRegisterEmail.text.toString(),
-                        edRegisterPassword.text.toString()
-                    ).also {
-                        isLoading.observe(this@RegisterActivity) { showLoading(it) }
-                        isRegistered.observe(this@RegisterActivity) { if (it) navigateToLogin() }
-                        error.observe(this@RegisterActivity) { if (!it.isNullOrEmpty()) showToast(it) }
+                if (!edRegisterName.error.isNullOrEmpty() || !edRegisterEmail.error.isNullOrEmpty() || !edRegisterPassword.error.isNullOrEmpty()) {
+                    when {
+                        !edRegisterName.error.isNullOrEmpty() -> showToast(edRegisterName.error.toString())
+                        !edRegisterEmail.error.isNullOrEmpty() -> showToast(edRegisterEmail.error.toString())
+                        !edRegisterPassword.error.isNullOrEmpty() -> showToast(edRegisterPassword.error.toString())
+                    }
+                } else {
+                    registerViewModel.apply {
+                        userRegister(
+                            edRegisterName.text.toString(),
+                            edRegisterEmail.text.toString(),
+                            edRegisterPassword.text.toString()
+                        ).also {
+                            isLoading.observe(this@RegisterActivity) { showLoading(it) }
+                            isRegistered.observe(this@RegisterActivity) { if (it) navigateToLogin() }
+                            error.observe(this@RegisterActivity) { if (!it.isNullOrEmpty()) showToast(it) }
+                        }
                     }
                 }
             }
