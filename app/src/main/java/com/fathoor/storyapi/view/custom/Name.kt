@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Patterns
 import com.fathoor.storyapi.R
 import com.google.android.material.textfield.TextInputEditText
 
@@ -28,8 +27,8 @@ class Name: TextInputEditText {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable) {
-                val email = s.toString()
-                error = if (email.isEmpty()) {
+                val name = s.toString()
+                error = if (name.isEmpty()) {
                     resources.getString(R.string.error_name_empty)
                 } else {
                     null
