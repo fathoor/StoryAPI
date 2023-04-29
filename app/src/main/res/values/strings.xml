@@ -15,6 +15,9 @@
     <string name="register_button">Register</string>
     <string name="error_email">Email is not valid</string>
     <string name="error_password">Password must be at least 8 characters long</string>
+    <string name="error_name_empty">Name is required</string>
+    <string name="error_password_empty">Password is required</string>
+    <string name="error_email_empty">Email is required</string>
 
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>

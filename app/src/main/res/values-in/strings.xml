@@ -15,6 +15,9 @@
     <string name="register_button">Daftar</string>
     <string name="error_email">Email tidak valid</string>
     <string name="error_password">Kata Sandi minimal 8 karakter</string>
+    <string name="error_name_empty">Nama wajib diisi</string>
+    <string name="error_password_empty">Kata Sandi wajib diisi</string>
+    <string name="error_email_empty">Email wajib diisi</string>
 
     <string name="dialog_yes">Iya</string>
     <string name="dialog_no">Tidak</string>

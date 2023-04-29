@@ -31,6 +31,8 @@ class Email: TextInputEditText {
                 val email = s.toString()
                 error = if (!Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty()) {
                     resources.getString(R.string.error_email)
+                } else if (email.isEmpty()) {
+                    resources.getString(R.string.error_email_empty)
                 } else {
                     null
                 }
