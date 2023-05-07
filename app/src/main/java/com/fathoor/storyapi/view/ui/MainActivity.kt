@@ -165,14 +165,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.userLogout()
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showLoading(state: Boolean) {
-        binding.cpiMain.visibility = if (state) View.VISIBLE else View.GONE
-    }
-
     companion object {
         const val EXTRA_TOKEN = "extra_token"
     }
