@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.first
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token")
 
-class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
+class UserPreference(private val dataStore: DataStore<Preferences>) {
     suspend fun getToken(): String? {
         return dataStore.data.first()[TOKEN_KEY]
     }

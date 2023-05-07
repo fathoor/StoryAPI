@@ -1,0 +1,9 @@
+{
+  "error": false,
+  "message": "success",
+  "loginResult": {
+    "userId": "user-hJNRX4EDe2QwzW2A",
+    "name": "Fathoor",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWhKTlJYNEVEZTJRd3pXMkEiLCJpYXQiOjE2ODM0NTE5MDF9.na8NdA1athkp1kgSHXGCNSiy4ygZyZXa5UgU91HE3bk"
+  }
+}

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.ui.MainActivity">
 
+
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/cpi_main"
         android:layout_width="wrap_content"
@@ -43,7 +44,7 @@
                 app:titleTextColor="@color/white"
                 app:titleTextAppearance="@style/ToolbarTitleAppearance"
                 app:menu="@menu/top_app_bar"
-                app:navigationIcon="@drawable/ic_logout" />
+                app:navigationIcon="@drawable/ic_language" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -62,6 +63,31 @@
                 android:scrollbarSize="0dp" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_top"
+            app:tint="@color/white"
+            app:layout_anchor="@id/srl_story"
+            app:layout_anchorGravity="top|end"
+            android:contentDescription="@string/accessibility_top" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:backgroundTint="?attr/colorPrimary"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="@color/white"
+            app:layout_anchor="@id/rv_story"
+            app:layout_anchorGravity="bottom|end"
+            android:contentDescription="@string/accessibility_add_photo" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

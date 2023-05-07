@@ -8,11 +8,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fathoor.storyapi.R
 import com.fathoor.storyapi.databinding.ActivityMainBinding
 import com.fathoor.storyapi.model.remote.response.Story
+import com.fathoor.storyapi.view.adapter.LoadingStateAdapter
 import com.fathoor.storyapi.view.adapter.StoryAdapter
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.MainViewModel
@@ -24,14 +27,13 @@ class MainActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(application)
     }
     private var userToken: String? = null
-    private var storyList: List<Story>? = null
+    private var storyList: PagingData<Story>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setupView()
-        setupAppBar()
         setupViewModel()
     }
 
@@ -43,36 +45,65 @@ class MainActivity : AppCompatActivity() {
     private fun setupView() {
         userToken = intent.getStringExtra(EXTRA_TOKEN) ?: ""
         setupSwipeRefresh()
+        setupAppBar()
+        setupFAB()
     }
 
     private fun setupAppBar() {
         binding.topAppBar.apply {
-            setNavigationOnClickListener { showAlertDialog() }
+            setNavigationOnClickListener { startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS)) }
             setOnMenuItemClickListener { navigateToMenu(it) }
+        }
+    }
+
+    private fun setupFAB() {
+        binding.apply {
+            fabAdd.setOnClickListener {
+                Intent(this@MainActivity, AddStoryActivity::class.java).also {
+                    it.putExtra(AddStoryActivity.EXTRA_TOKEN, userToken)
+                    startActivity(it)
+                }
+            }
+
+            fabTop.setOnClickListener {
+                rvStory.smoothScrollToPosition(0)
+            }
+
+            rvStory.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) {
+                        fabAdd.hide()
+                        fabTop.show()
+                    } else {
+                        fabAdd.show()
+                        fabTop.hide()
+                    }
+                }
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (!rvStory.canScrollVertically(-1)) { fabAdd.show() }
+                }
+            })
         }
     }
 
     private fun setupViewModel() {
         mainViewModel.apply {
-            userToken?.let { token ->
-                userStoryList(token).also {
-                    isLoading.observe(this@MainActivity) { showLoading(it) }
-                    error.observe(this@MainActivity) { if (!it.isNullOrEmpty()) showToast(it) }
-                    story.observe(this@MainActivity) {
-                        storyList = it
-                        setupRecyclerView(it)
-                    }
-                }
+            userStoryList().observe(this@MainActivity) {
+                storyList = it
+                setupRecyclerView(it)
             }
         }
     }
 
-    private fun setupRecyclerView(story: List<Story>) {
+    private fun setupRecyclerView(story: PagingData<Story>) {
         val storyAdapter = StoryAdapter()
-        storyAdapter.submitList(story)
+        storyAdapter.submitData(lifecycle, story)
 
         binding.rvStory.apply {
-            adapter = storyAdapter
+            adapter = storyAdapter.withLoadStateFooter(LoadingStateAdapter { storyAdapter.retry() })
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
@@ -115,15 +146,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateToMenu(menu: MenuItem): Boolean {
         return when (menu.itemId) {
-            R.id.action_add -> {
-                Intent(this@MainActivity, AddStoryActivity::class.java).also {
+            R.id.action_map -> {
+                Intent(this@MainActivity, MapActivity::class.java).also {
                     it.putExtra(AddStoryActivity.EXTRA_TOKEN, userToken)
                     startActivity(it)
                 }
                 true
             }
-            R.id.action_language -> {
-                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            R.id.action_logout -> {
+                showAlertDialog()
                 true
             }
             else -> false

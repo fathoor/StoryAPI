@@ -9,6 +9,7 @@ import com.fathoor.storyapi.viewmodel.AddStoryViewModel
 import com.fathoor.storyapi.viewmodel.DetailStoryViewModel
 import com.fathoor.storyapi.viewmodel.LoginViewModel
 import com.fathoor.storyapi.viewmodel.MainViewModel
+import com.fathoor.storyapi.viewmodel.MapViewModel
 import com.fathoor.storyapi.viewmodel.OnboardViewModel
 import com.fathoor.storyapi.viewmodel.RegisterViewModel
 
@@ -18,9 +19,10 @@ class ViewModelFactory(private val application: Application) : ViewModelProvider
             OnboardViewModel::class.java -> OnboardViewModel(provideUserRepository(application))
             LoginViewModel::class.java -> LoginViewModel(provideUserRepository(application))
             RegisterViewModel::class.java -> RegisterViewModel(provideUserRepository(application))
-            MainViewModel::class.java -> MainViewModel(provideUserRepository(application), provideStoryRepository())
-            DetailStoryViewModel::class.java -> DetailStoryViewModel(provideStoryRepository())
-            AddStoryViewModel::class.java -> AddStoryViewModel(provideStoryRepository(), application)
+            MainViewModel::class.java -> MainViewModel(provideUserRepository(application), provideStoryRepository(application))
+            DetailStoryViewModel::class.java -> DetailStoryViewModel(provideStoryRepository(application))
+            AddStoryViewModel::class.java -> AddStoryViewModel(provideStoryRepository(application), application)
+            MapViewModel::class.java -> MapViewModel(provideStoryRepository(application))
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         } as T
 

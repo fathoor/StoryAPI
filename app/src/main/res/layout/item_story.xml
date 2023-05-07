@@ -16,48 +16,52 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp">
 
             <ImageView
                 android:id="@+id/iv_item_photo"
                 android:layout_width="192dp"
                 android:layout_height="256dp"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/accessibility_item_photo" />
+                android:contentDescription="@string/accessibility_item_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="?attr/colorPrimary"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:layout_constraintStart_toEndOf="@+id/iv_item_photo"
+                app:layout_constraintEnd_toEndOf="@id/card_wrapper"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_item_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/inter_semibold"
-                    android:textColor="?attr/colorPrimary"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+            <TextView
+                android:id="@+id/tv_item_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter"
+                android:textColor="?attr/colorPrimary"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                app:layout_constraintStart_toEndOf="@id/iv_item_photo"
+                app:layout_constraintEnd_toEndOf="@id/card_wrapper"
+                app:layout_constraintTop_toBottomOf="@+id/tv_item_name" />
 
-                <TextView
-                    android:id="@+id/tv_item_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:maxLines="3"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/inter"
-                    android:textColor="?attr/colorPrimary"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

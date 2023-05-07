@@ -29,6 +29,7 @@
     <string name="gallery_button">Galeri</string>
     <string name="upload_button">Unggah</string>
     <string name="add_description">Deskripsi</string>
+    <string name="label_location">Lokasi Saat Ini</string>
 
     <string name="camera_permission">Izin tidak diberikan oleh pengguna</string>
     <string name="camera_failed">Gagal mengambil gambar</string>
@@ -36,9 +37,13 @@
     <string name="camera_upload_description">Isi deskripsi gambar</string>
 
     <string name="language_title">Bahasa</string>
+    <string name="map_title">Peta</string>
     <string name="accessibility_add_photo">Tambah Foto</string>
     <string name="accessibility_capture">Tangkap</string>
     <string name="accessibility_switch">Ubah</string>
     <string name="accessibility_detail_photo">Detail Foto</string>
     <string name="accessibility_item_photo">Item Foto</string>
+    <string name="accessibility_top">Kembali ke atas</string>
+
+    <string name="retry_button">Ulangi</string>
 </resources>

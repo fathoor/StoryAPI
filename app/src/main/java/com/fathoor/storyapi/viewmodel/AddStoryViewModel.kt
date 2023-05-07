@@ -41,6 +41,9 @@ class AddStoryViewModel(private val repository: StoryRepository, private val app
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
+    val latitude = MutableLiveData<Double>()
+    val longitude = MutableLiveData<Double>()
+
     fun handleCameraActivityResult(result: ActivityResult) {
         if (result.resultCode == CAMERA_X_SUCCESS) {
             val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -80,9 +83,11 @@ class AddStoryViewModel(private val repository: StoryRepository, private val app
         val photoDescription = description.toRequestBody("text/plain".toMediaType())
         val requestImage = photoFile.asRequestBody("image/jpeg".toMediaType())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", photoFile.name, requestImage)
+        val lat = latitude.value?.toFloat()
+        val lon = longitude.value?.toFloat()
 
         runCatching {
-            repository.userStory(token, imageMultipart, photoDescription)
+            repository.userStory(token, imageMultipart, photoDescription, lat, lon)
         }.let { result ->
             result.onSuccess {
                 _isLoading.value = false

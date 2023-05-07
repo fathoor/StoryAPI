@@ -1,8 +1,10 @@
 package com.fathoor.storyapi.view.ui
 
+import android.Manifest
 import android.content.Intent
 import android.content.Intent.ACTION_PICK
 import android.content.pm.PackageManager
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,6 +20,8 @@ import com.fathoor.storyapi.R
 import com.fathoor.storyapi.databinding.ActivityAddStoryBinding
 import com.fathoor.storyapi.view.helper.ViewModelFactory
 import com.fathoor.storyapi.viewmodel.AddStoryViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
@@ -29,6 +33,8 @@ class AddStoryActivity : AppCompatActivity() {
     private var getFile: File? = null
     private var launcherIntentCameraX: ActivityResultLauncher<Intent>? = null
     private var launcherIntentGallery: ActivityResultLauncher<Intent>? = null
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var userLocation: Location? = null
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -54,7 +60,6 @@ class AddStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupView()
-        setupAppBar()
         setupViewModel()
         setupAction()
     }
@@ -65,6 +70,8 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun setupView() {
         userToken = intent.getStringExtra(EXTRA_TOKEN) ?: ""
+        setupAppBar()
+        setupLocation()
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(this@AddStoryActivity, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -86,6 +93,20 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@AddStoryActivity)
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this@AddStoryActivity, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+        } else {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    userLocation = it
+                }
+            }
+        }
+    }
+
     private fun setupViewModel() {
         addStoryViewModel.apply {
             file.observe(this@AddStoryActivity) { getFile = it }
@@ -98,6 +119,7 @@ class AddStoryActivity : AppCompatActivity() {
             btnCamera.setOnClickListener { startCameraX() }
             btnGallery.setOnClickListener { startGallery() }
             btnUpload.setOnClickListener { uploadStory() }
+            swLocation.setOnCheckedChangeListener { _, isChecked -> getUserLocation(isChecked)}
         }
     }
 
@@ -125,6 +147,25 @@ class AddStoryActivity : AppCompatActivity() {
                     isUploaded.observe(this@AddStoryActivity) { if (it) navigateWithToken() }
                     error.observe(this@AddStoryActivity) { if (!it.isNullOrEmpty()) showToast(it) }
                 }
+            }
+        }
+    }
+
+    private fun getUserLocation(isChecked: Boolean) {
+        addStoryViewModel.apply {
+            if (isChecked) {
+                if (userLocation != null) {
+                    userLocation?.let { location ->
+                        latitude.value = location.latitude
+                        longitude.value = location.longitude
+                    }
+                } else {
+                    latitude.value = DEFAULT_LAT
+                    longitude.value = DEFAULT_LON
+                }
+            } else {
+                latitude.value = null
+                longitude.value = null
             }
         }
     }
@@ -162,7 +203,9 @@ class AddStoryActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_TOKEN = "extra_token"
-        private val REQUIRED_PERMISSIONS = arrayOf("android.permission.CAMERA")
+        private val REQUIRED_PERMISSIONS = arrayOf("android.permission.CAMERA", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION")
         private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val DEFAULT_LAT = -6.8957643
+        private const val DEFAULT_LON = 107.6338462
     }
 }

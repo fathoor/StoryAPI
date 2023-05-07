@@ -30,12 +30,22 @@ interface ApiService {
     fun userStory(
         @Header("Authorization") token: String,
         @Part photo: MultipartBody.Part,
-        @Part("description") description: RequestBody
+        @Part("description") description: RequestBody,
+        @Part("lat") lat: Float? = null,
+        @Part("lon") lon: Float? = null
     ) : Call<Response>
 
     @GET("stories")
     fun userStoryList(
         @Header("Authorization") token: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ) : Call<StoryListResponse>
+
+    @GET("stories")
+    fun userStoryMap(
+        @Header("Authorization") token: String,
+        @Query("location") location: Int
     ) : Call<StoryListResponse>
 
     @GET("stories/{id}")

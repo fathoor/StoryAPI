@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_add"
-        android:icon="@drawable/ic_add"
-        android:title="@string/add_title"
+        android:id="@+id/action_map"
+        android:icon="@drawable/ic_map"
+        android:title="@string/map_title"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_language"
-        android:icon="@drawable/ic_language"
-        android:title="@string/language_title"
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/logout_button"
         app:showAsAction="ifRoom" />
 
 </menu>

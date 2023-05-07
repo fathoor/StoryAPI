@@ -35,5 +35,11 @@ data class Story(
     val description: String,
 
     @field:SerializedName("photoUrl")
-    val photoUrl: String
+    val photoUrl: String,
+
+    @field:SerializedName("lat")
+    val lat: Float? = null,
+
+    @field:SerializedName("lon")
+    val lon: Float? = null
 )
