@@ -66,7 +66,7 @@ class MainViewModelTest {
         assertNotNull(differ.snapshot()) // Assert that the returned list is not null
         assertEquals(storiesDummy, differ.snapshot()) // Assert that the returned list is equal to the dummy list
         assertEquals(storiesDummy.size, differ.snapshot().size) // Assert that the returned list size is equal to the dummy list size
-        assertEquals(storiesDummy[0].id, differ.snapshot()[0]?.id) // Assert that the returned list first item id is equal to the dummy list first item id
+        assertEquals(storiesDummy[0], differ.snapshot()[0]) // Assert that the returned list first item is equal to the dummy list first item
     }
 
     @Test
