@@ -1,0 +1,96 @@
+{
+  "error": false,
+  "message": "Stories fetched successfully",
+  "listStory": [
+    {
+      "id": "story-jUTgfaOeEiHsVM0E",
+      "name": "torik",
+      "description": "123",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683458689790_erEgxxrT.jpg",
+      "createdAt": "2023-05-07T11:24:49.792Z",
+      "lat": -2.7188232,
+      "lon": 111.644
+    },
+    {
+      "id": "story-pKY83ddfJSE_Yr1R",
+      "name": "Rizky",
+      "description": "error ",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683458612889_o5EE8kxq.jpg",
+      "createdAt": "2023-05-07T11:23:32.890Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-8Nbqzg5L07c7Nxc6",
+      "name": "johndoe",
+      "description": "tesssssss",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683458239613_9x6qvAkC.jpg",
+      "createdAt": "2023-05-07T11:17:19.614Z",
+      "lat": 37.4274275,
+      "lon": -122.1683996
+    },
+    {
+      "id": "story-o27pT_RvPUH3tC2G",
+      "name": "akhmadtest1",
+      "description": "Description from espresso test",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683458151610_2Fi6B1KG.jpg",
+      "createdAt": "2023-05-07T11:15:51.612Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-KHmt6zjO0mdOV7qX",
+      "name": "Dani Purmanto ",
+      "description": "test",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683458143357_xjhh-Nkp.jpg",
+      "createdAt": "2023-05-07T11:15:43.360Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-CdsiZrMC_GAMJGmp",
+      "name": "Dani Purmanto ",
+      "description": "teste",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683458046598_VKu4PgeW.jpg",
+      "createdAt": "2023-05-07T11:14:06.602Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-vBsRzMcw0-AZ3cp6",
+      "name": "testbwang",
+      "description": "tadi masih ga ke refresh bg",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683457943040_Izvh8MQV.jpg",
+      "createdAt": "2023-05-07T11:12:23.041Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-9MIxCvziL13x_2ND",
+      "name": "diadiadia",
+      "description": "a",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683457881595_ez18HFGW.jpg",
+      "createdAt": "2023-05-07T11:11:21.597Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-vDt94Nf5Dlw1FQNg",
+      "name": "Samuel",
+      "description": "no woof",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683457834127_xxnXY620.jpg",
+      "createdAt": "2023-05-07T11:10:34.129Z",
+      "lat": null,
+      "lon": null
+    },
+    {
+      "id": "story-pEXmgJpcdlI4LS1s",
+      "name": "Hamzan",
+      "description": "trstf",
+      "photoUrl": "https://story-api.dicoding.dev/images/stories/photos-1683457806750_6GtL1gv4.jpg",
+      "createdAt": "2023-05-07T11:10:06.753Z",
+      "lat": null,
+      "lon": null
+    }
+  ]
+}
